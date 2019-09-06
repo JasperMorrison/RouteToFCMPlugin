@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.jasper.openfire</groupId>
+    <artifactId>offlinefcm</artifactId>
+    <version>4.2.0-SNAPSHOT</version>
+
+    <properties>
+        <openfire.version>4.2.0</openfire.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.igniterealtime.openfire</groupId>
+            <artifactId>xmppserver</artifactId>
+            <version>${openfire.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.pixsee.java-fcm</groupId>
+          <artifactId>Java-fcm</artifactId>
+          <version>1.0.0</version>
+        </dependency>
+        <dependency>
+          <groupId>com.google.firebase</groupId>
+          <artifactId>firebase-admin</artifactId>
+          <version>6.10.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcpg-jdk15</artifactId>
+            <version>1.46</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.wso2.orbit.org.bouncycastle/bcpkix-jdk15on -->
+        <dependency>
+            <groupId>org.wso2.orbit.org.bouncycastle</groupId>
+            <artifactId>bcpkix-jdk15on</artifactId>
+            <version>1.60.0.wso2v1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on -->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>1.62</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.5</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.9</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpcore -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.4.12</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/javax.websocket/javax.websocket-api -->
+        <dependency>
+            <groupId>javax.websocket</groupId>
+            <artifactId>javax.websocket-api</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/net.sourceforge.jtds/jtds -->
+        <dependency>
+            <groupId>net.sourceforge.jtds</groupId>
+            <artifactId>jtds</artifactId>
+            <version>1.3.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.testcontainers/mysql -->
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mysql</artifactId>
+            <version>1.12.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.mortbay.jetty.npn/npn-boot -->
+        <dependency>
+            <groupId>org.mortbay.jetty.npn</groupId>
+            <artifactId>npn-boot</artifactId>
+            <version>8.1.2.v20120308</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.tpolecat/doobie-postgres -->
+        <dependency>
+            <groupId>org.tpolecat</groupId>
+            <artifactId>doobie-postgres_2.13</artifactId>
+            <version>0.8.0-RC1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>2.0.0-alpha0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.igniterealtime/tinder -->
+        <dependency>
+            <groupId>org.igniterealtime</groupId>
+            <artifactId>tinder</artifactId>
+            <version>1.3.0</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.5</version>
+                <executions>
+                <execution>
+                    <id>copy-xmls</id>
+                    <phase>process-sources</phase>
+                    <goals>
+                         <goal>copy-resources</goal>
+                    </goals>
+                    <configuration>
+                         <outputDirectory>../../distribution/target/distribution-base/resources/${project.artifactId}</outputDirectory>
+                         <resources>
+                              <resource>
+                                  <directory>${basedir}/res</directory>
+                                  <includes>
+                                      <include>*.json</include>
+                                   </includes>
+                              </resource>
+                         </resources>
+                    </configuration>
+                </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.6</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.igniterealtime.openfire.plugins</groupId>
+                        <artifactId>openfire-plugin-assembly-descriptor</artifactId>
+                        <version>${openfire.version}</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <finalName>${project.artifactId}</finalName>
+                            <attach>false</attach>
+                            <descriptorRefs>
+                                <descriptorRef>openfire-plugin-assembly</descriptorRef>
+                            </descriptorRefs>
+                            <outputDirectory>../../distribution/target/distribution-base/plugins</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>3.0.0</version>
+                <extensions>true</extensions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
