@@ -101,9 +101,9 @@ public class RouteOfflineMessagesToFCM implements Component, Plugin, OfflineMess
 		JsonObject notificationObject = new JsonObject();
 		notificationObject.addProperty("title", arg0.getFrom().toString());
         notificationObject.addProperty("body", arg0.getBody().toString());
-        String  token = "fXj_14w0Ab0:APA91bEp2sHhVSRCtmdF4H6ncMwLNZFk0rFR_kdnulOQQslGPh-frW1bBiSneg8Q7JS1sN-kacXMTiEKp5KVehWHLMxVN73a57zGRNAuOZQTMFP3ey0aD6rp9KNdLbaC6e-nJdQn_N5k";
+        
 		try {
-			FCMHelper.getInstance().sendNotifictaionAndData(FCMHelper.TYPE_TO, token,
+			FCMHelper.getInstance().sendNotifictaionAndData(FCMHelper.TYPE_TO, new SecurityUtils().getToken(),
 					notificationObject, dataObject);
 			//AWSHelper.getInstance().sendAWSMessage(dataObject);
 		} catch (IOException e) {
