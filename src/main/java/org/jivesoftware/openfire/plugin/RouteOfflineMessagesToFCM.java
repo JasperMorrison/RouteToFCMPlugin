@@ -60,9 +60,9 @@ public class RouteOfflineMessagesToFCM implements Component, Plugin, OfflineMess
         * fcm2Send: use a git lib which using firebase-java-sdk, but do not support proxy ,send failed
         * fcmSend:  use old http post, test success
         */
-        //fcm3Send(arg0);
+        fcm3Send(arg0);
         //fcm2Send(arg0);
-        fcmSend(arg0);
+        //fcmSend(arg0);
 	}
     
     private boolean checkForStored(org.xmpp.packet.Message msg) {

@@ -5,6 +5,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.Message;
+import com.google.firebase.messaging.AndroidConfig;
 import java.io.FileInputStream;
 import java.util.concurrent.CountDownLatch;
 import com.google.auth.http.HttpTransportFactory;
@@ -22,14 +23,21 @@ public class FCMHelper3 {
     
     public void sendMsg(org.xmpp.packet.Message msg) {
         String registrationToken = new SecurityUtils().getToken();
+        AndroidConfig ac = AndroidConfig.builder()
+            .setPriority(AndroidConfig.Priority.NORMAL)
+            .build();
 
+        String from = msg.getFrom().toString();
+        String body = msg.getBody();
+        
         // See documentation on defining a message payload.
         Message message = Message.builder()
-            .setNotification(new Notification("Hello", "Girl"))
-            .putData("title", "Hello")
-            .putData("body", "World")
+            .setNotification(new Notification(from, body))
+            .putData("title", from)
+            .putData("body", body)
             .setToken(registrationToken)  /** CHOOSE EITHER seToken (For Sending to single device) or setTopic method **/
             //.setTopic("Test")
+            .setAndroidConfig(ac)
             .build();
         System.out.println("message built");
 
